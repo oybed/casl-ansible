@@ -25,7 +25,13 @@ Role used to apply OpenShift objects to an existing OpenShift Cluster.
 
 ## Requirements
 
+<<<<<<< HEAD
 A working OpenShift cluster that can be used to populate things like namespaces, policies and PVs (all require cluster-admin), or application level content.
+=======
+Requirements
+------------
+A working OpenShift cluster that can be used to populate things like namespaces, policies and PVs (all require cluster-admin), or application level content (not requireing cluster-admin).
+>>>>>>> Adding pre/post steps for openshift-applier
 
 
 ## Role Usage
@@ -36,14 +42,26 @@ The variable definitions come in the form of an object, `openshift_cluster_conte
 
 ```yaml
 openshift_cluster_content:
+- galaxy_requirements:
+    - "path/to/galaxy/requirements.yml"
 - object: <object_type>
+  pre_steps: # Optional: pre-steps at object level can be added if desired
+    - role: <path to an ansible role>
   content:
   - name: <definition_name>
+    pre_steps: # Optional: pre-steps at content level can be added if desired
+      - role: <path to an ansible role>
+        vars: # Optional: only needed if the role above needs values passed
+          <key1>: <value1>  
     file: <file source>
     file_action: <apply|create> # Optional: Defaults to 'apply'
-    tags: # Optional: Tags can be left out - and only needed if `filter_tags` is used
+    tags: # Optional: Tags are only needed if `filter_tags` is used
     - tag1
     - tag2
+    post_steps: # Optional: post-steps at content level can be added if desired
+      - role: <path to an ansible role>
+  post_steps: # Optional: post-steps at object level can be added if desired
+    - role: <path to an ansible role>
 - object: <object_type>
   content:
   - name: <definition_name>
@@ -153,7 +171,24 @@ filter_tags=tag1,tag2
 
 ```
 
+<<<<<<< HEAD
 ### Deprovisioning
+=======
+### Pre/Post steps
+
+The `openshift-applier` supports the use of pre and post steps to allow for tasks to be executed before / after content is loaded up in OpenShift. This can be useful for things like:
+ - waiting on a deployment to become ready before proceeding to the next
+ - seeding the application with content after deployment
+ - applying additional tweaks to the OpenShift objects post deployment (e.g.: labels, env variables, etc.)
+
+The pre/post steps can be added at both the `object` level as well as the `content level`. See example at the top for more details.
+
+In essence, the pre/post steps are ansible roles that gets executed in the order they are found in the inventory. These roles are sourced from the `galaxy_requirements` file part of the inventory. See the official [Ansible Galaxy docs for more details on the requirements yaml file](http://docs.ansible.com/ansible/latest/galaxy.html#installing-multiple-roles-from-a-file).
+
+**_NOTE:_** it is important that the repos used for pre/post roles have the `meta/main.yml` file setup correctly. See the [Ansible Galaxy docs](docs.ansible.com/ansible/latest/galaxy.html) for more details.
+
+For roles that requires input parameters, the implementation also supports supplying variables, as part of the inventory, to the pre/post steps. See example at the top for more details.
+>>>>>>> Adding pre/post steps for openshift-applier
 
 The `openshift-applier` role also supports global deprovisioning of resources. This can be done either using `provision: false`. Setting `-e provision: false` on a run essentially acts like a big 'undo' button, re-running all files and templates through `oc delete -f <resources>`. This can be useful when you want to do a full cleanup to ensure the integrity of you IaC repo, or for simple cleanup while testing changes.
 
