@@ -1,5 +1,20 @@
 # Tasks to deploy AWS infra based in the requested intance numbers
 ---
+
+- name: "Create the instance tags for Master / etcd"
+  set_fact:
+    master_tags:
+      user: "{{ user_tag }}"
+      role: "{{ role_tag }}"
+      group: "{{ group_masters_tag }}"
+      node_labels: "{{ labels_master_tag }}"
+      ocp_role: "{{ master_tag }} {{ etcd_tag }}"
+      env_id: "{{ env_id }}"
+
+- name: "Append the dynamic cluster tag"
+  set_fact:
+    master_tags: "{{ master_tags|combine({'kubernetes.io/cluster/cluster-' + env_id: env_id}) }}"
+
 - name: Create Master and etcd instances
   ec2:
     image: "{{ aws_image_name }}"
@@ -15,14 +30,7 @@
     wait: yes
     count_tag:
       Name: "{{ env_id }}-ocp-master-{{ item }}"
-    instance_tags:
-      Name: "{{ env_id }}-ocp-master-{{ item }}"
-      user: "{{ user_tag }}"
-      role: "{{ role_tag }}"
-      group: "{{ group_masters_tag }}"
-      node_labels: "{{ labels_master_tag }}"
-      ocp_role: "{{ master_tag }} {{ etcd_tag}}"
-      env_id: "{{ env_id }}"
+    instance_tags: "{{ master_tags|combine({'Name': env_id + '-ocp-master-' + item }) }}"
     volumes:
       - device_name: /dev/sda1
         volume_type: gp2
