@@ -42,6 +42,20 @@
     count="{{ aws_num_masters }}"
   register: instances_master_etcd
 
+- name: "Create the instance tags for Infra"
+  set_fact:
+    infra_tags:
+      user: "{{ user_tag }}"
+      role: "{{ role_tag }}"
+      group: "{{ group_infra_tag }}"
+      node_labels: "{{ labels_infra_tag }}"
+      ocp_role: "{{ infranode_tag }}"
+      env_id: "{{ env_id }}"
+
+- name: "Append the dynamic cluster tag"
+  set_fact:
+    infra_tags: "{{ infra_tags|combine({'kubernetes.io/cluster/cluster-' + env_id: env_id}) }}"
+
 - name: Create Infra instances
   ec2:
     image: "{{ aws_image_name }}"
@@ -57,14 +71,7 @@
     wait: yes
     count_tag:
       Name: "{{ env_id }}-ocp-infra-{{ item }}"
-    instance_tags:
-      Name: "{{ env_id }}-ocp-infra-{{ item }}"
-      user: "{{ user_tag }}"
-      role: "{{ role_tag }}"
-      group: "{{ group_infra_tag }}"
-      node_labels: "{{ labels_infra_tag }}"
-      ocp_role: "{{ infranode_tag }}"
-      env_id: "{{ env_id }}"
+    instance_tags: "{{ infra_tags|combine({'Name': env_id + '-ocp-infra-' + item }) }}"
     volumes:
       - device_name: /dev/sda1
         volume_type: gp2
@@ -84,6 +91,20 @@
     count="{{ aws_num_infra }}"
   register: instances_infra
 
+- name: "Create the instance tags for Compute"
+  set_fact:
+    compute_tags:
+      user: "{{ user_tag }}"
+      role: "{{ role_tag }}"
+      group: "{{ group_compute_tag }}"
+      node_labels: "{{ labels_compute_tag }}"
+      ocp_role: "{{ computenode_tag }}"
+      env_id: "{{ env_id }}"
+
+- name: "Append the dynamic cluster tag"
+  set_fact:
+    compute_tags: "{{ compute_tags|combine({'kubernetes.io/cluster/cluster-' + env_id: env_id}) }}"
+
 - name: Create Compute instances
   ec2:
     image: "{{ aws_image_name }}"
@@ -99,14 +120,7 @@
     wait: yes
     count_tag:
       Name: "{{ env_id }}-ocp-node-{{ item }}"
-    instance_tags:
-      Name: "{{ env_id }}-ocp-node-{{ item }}"
-      user: "{{ user_tag }}"
-      role: "{{ role_tag }}"
-      group: "{{ group_compute_tag }}"
-      node_labels: "{{ labels_compute_tag }}"
-      ocp_role: "{{ computenode_tag }}"
-      env_id: "{{ env_id }}"
+    instance_tags: "{{ compute_tags|combine({'Name': env_id + '-ocp-node-' + item }) }}"
     volumes:
       - device_name: /dev/sda1
         volume_type: gp2
