@@ -71,6 +71,8 @@ You have the choice of sourcing a `file` or a `template`. The `file` definition 
 
 The `tags` definition is a list of tags that will be processed if the `filter_tags` variable/fact is supplied. See [Filtering content based on tags](https://github.com/redhat-cop/casl-ansible/tree/filter/roles/openshift-applier#filtering-content-based-on-tags) below for more details.
 
+The pre/post definitions are a set of pre and post roles to execute before/after a particular portion of the inventory is applied. This can be before/afterthe object levels - i.e.: before and after all of the content, or before/after certain files/templates at a content level.
+
 ### Sourcing a directory with files
 
 You can source a directory composed of static files (without parameters) using `files` instead of defining each file individually.
