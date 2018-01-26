@@ -158,7 +158,7 @@ Valid `file_action` and `template_action` values are `apply`, `create`, and `del
 
 The `openshift-applier` supports the use of tags in the inventory (see example above) to allow for filtering which content should be processed and not. The `filter_tags` variable/fact takes a comma separated list of tags that will be processed and only content/content_dir with matching tags will be applied.
 
-**_NOTE:_** Entries in the inventory without tags will not be procssed when a valid list is supplied with the `filter_tags` option.
+**_NOTE:_** Entries in the inventory without tags will not be processed when a valid list is supplied with the `filter_tags` option.
 
 ```
 filter_tags=tag1,tag2
