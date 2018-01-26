@@ -3,7 +3,7 @@ OpenShift Applier Docker Client
 
 Produces a container capable of acting as a control host for `openshift-applier`
 
-*NOTE:* This is also used to enable the use of versions that may not be quite main stream or pre-release.
+**_NOTE:_** This is also used to enable the use of versions that may not be quite main stream (or a pre-release).
 
 
 ## Setup
@@ -36,11 +36,11 @@ docker run  \
 ```
 
 NOTE: The above commands expects the following inputs:
-* You already have a valid session with the OpenShift cluster (.e.: using `oc login`) with the session data stored in the default directory of `$HOME/.kube
-* Your ansible inventories and playbooks repos to exist in $HOME/src
+* You already have a valid session with the OpenShift cluster (i.e.: using `oc login`) with the session data stored in the default directory of `$HOME/.kube`
+* Your ansible inventories and playbooks repos to exist in `$HOME/src`
 * Your ansible inventories and playbooks repos to live within the same directory, mounted at `/tmp/src`
 
-*Tip:* If the above assumptions are wrong, please adjust accordingly
+**_TIP:_** If your inventories, playbooks, etc. do not exist at the above mentioned paths, make sure to adjust the arguments to the `-v` parameters accordingly
 
 ## Building the Image
 
