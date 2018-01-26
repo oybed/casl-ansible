@@ -25,7 +25,7 @@ glusterfs
 tag_group_masters_aws
 
 [etcd:children]
-tag_group_etcd_aws
+tag_group_masters_aws
 
 [nodes:children]
 masters
