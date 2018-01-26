@@ -25,13 +25,7 @@ Role used to apply OpenShift objects to an existing OpenShift Cluster.
 
 ## Requirements
 
-<<<<<<< HEAD
-A working OpenShift cluster that can be used to populate things like namespaces, policies and PVs (all require cluster-admin), or application level content.
-=======
-Requirements
-------------
-A working OpenShift cluster that can be used to populate things like namespaces, policies and PVs (all require cluster-admin), or application level content (not requireing cluster-admin).
->>>>>>> Adding pre/post steps for openshift-applier
+A working OpenShift cluster that can be used to populate things like namespaces, policies and PVs (all require cluster-admin), or application level content (cluster-admin not required).
 
 
 ## Role Usage
@@ -171,9 +165,6 @@ filter_tags=tag1,tag2
 
 ```
 
-<<<<<<< HEAD
-### Deprovisioning
-=======
 ### Pre/Post steps
 
 The `openshift-applier` supports the use of pre and post steps to allow for tasks to be executed before / after content is loaded up in OpenShift. This can be useful for things like:
@@ -188,7 +179,8 @@ In essence, the pre/post steps are ansible roles that gets executed in the order
 **_NOTE:_** it is important that the repos used for pre/post roles have the `meta/main.yml` file setup correctly. See the [Ansible Galaxy docs](docs.ansible.com/ansible/latest/galaxy.html) for more details.
 
 For roles that requires input parameters, the implementation also supports supplying variables, as part of the inventory, to the pre/post steps. See example at the top for more details.
->>>>>>> Adding pre/post steps for openshift-applier
+
+### Deprovisioning
 
 The `openshift-applier` role also supports global deprovisioning of resources. This can be done either using `provision: false`. Setting `-e provision: false` on a run essentially acts like a big 'undo' button, re-running all files and templates through `oc delete -f <resources>`. This can be useful when you want to do a full cleanup to ensure the integrity of you IaC repo, or for simple cleanup while testing changes.
 
