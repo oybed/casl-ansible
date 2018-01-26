@@ -48,7 +48,7 @@ This image is built and published to docker.io, so there's no reason to build it
 
 ```
 cd ./casl-ansible
-docker build -f images/openshift-applier/Dockerfile -t redhatcop/openshift-applier .
+docker build -t redhatcop/openshift-applier images/openshift-applier
 ```
 
 ## Troubleshooting
