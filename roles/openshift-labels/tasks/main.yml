@@ -6,7 +6,7 @@
 
 - name: "Apply label {{ label }} to object {{ target_object }}"
   command: >
-    oc label {{ target_object }} {{ target_name }} {{ label }} {{ target_namespace }}
+    oc label --overwrite {{ target_object }} {{ target_name }} {{ label }} {{ target_namespace }}
   when:
   - target_object is defined
   - target_object|trim != ''
