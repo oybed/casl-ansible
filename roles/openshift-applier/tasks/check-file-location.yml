@@ -9,7 +9,9 @@
   uri:
     url: "{{ path }}"
     method: HEAD
-  failed_when: false
+  failed_when:
+  - url_result.status is defined
+  - url_result.status == -1
   register: url_result
 
 - name: "Check if passed in path is a local file (if not remote location)"
