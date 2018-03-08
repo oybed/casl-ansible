@@ -1,5 +1,10 @@
 ---
 
+- name: "Start with a clean list of records"
+  set_fact:
+    a_records: []
+    named_records: []
+
 - name: "Set the DNS zone to use"
   set_fact:
     nsupdate_zone: "{{ nsupdate.zone | default(full_dns_domain) }}"
@@ -61,14 +66,17 @@
 
 - name: "Generate the Add section for DNS for all nsupdate servers"
   set_fact:
-    named_records:
-      - view: "{{ nsupdate.view }}"
-        zone: "{{ nsupdate.zone }}"
-        server: "{{ item.server }}"
-        key_name: "{{ item.key_name }}"
-        key_secret: "{{ item.key_secret }}"
-        key_algorithm: "{{ item.key_algorithm | lower }}"
-        entries: "{{ a_records }}"
+    named_records: "{{ named_records | default([]) +
+                       [{
+                          'view': nsupdate.view,
+                          'zone': nsupdate.zone,
+                          'server': item.server,
+                          'key_name': item.key_name,
+                          'key_secret': item.key_secret,
+                          'key_algorithm': (item.key_algorithm | lower),
+                          'entries': a_records
+                       }]
+                    }}"
   with_items:
     - "{{ nsupdate.server_list }}"
 
