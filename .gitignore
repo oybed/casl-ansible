@@ -4,3 +4,4 @@ roles/infra-ansible
 roles/openshift-ansible
 roles/openshift-ansible-contrib
 *.pyc
+/.project
