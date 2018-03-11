@@ -18,6 +18,4 @@
     include_role:
       name:  create-gcp-infrastructure
       tasks_from: configure-registry-object-storage.yaml
-#    with_items:
-#    - configure-registry-object-storage.yaml
     when: hosting_infrastructure == "gcp"
