@@ -11,3 +11,13 @@
 #- import_playbook: ../openshift-cluster-seed.yml
 #  when:
 #  - openshift_cluster_content is defined
+
+- hosts: masters[0]
+  tasks:
+  - name: configure registry
+    include_role:
+      name:  create-gcp-infrastructure
+      tasks_from: configure-registry-object-storage.yaml
+#    with_items:
+#    - configure-registry-object-storage.yaml
+    when: hosting_infrastructure == "gcp"
