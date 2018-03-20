@@ -1,4 +1,9 @@
 ---
+
+# Post-Install tasks for specific providers
+- import_playbook: gcp/post-install.yaml
+  when: hosting_infrastructure == "gcp"
+
 - hosts: cluster_hosts
   roles:
     - role: sync-keys
@@ -8,14 +13,6 @@
   roles:
   - { role: create_users }
 
-#- import_playbook: ../openshift-cluster-seed.yml
-#  when:
-#  - openshift_cluster_content is defined
-
-- hosts: masters[0]
-  tasks:
-  - name: configure registry
-    include_role:
-      name:  manage-gcp-infra
-      tasks_from: configure-registry-object-storage.yaml
-    when: hosting_infrastructure == "gcp"
+- import_playbook: ../openshift-cluster-seed.yml
+  when:
+  - openshift_cluster_content is defined
