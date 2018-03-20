@@ -192,7 +192,8 @@ docker run -t -u `id -u` -v <gcp keyfile.json location>:<gcp keyfile.json locati
                          -v <your inventory>:/tmp/inventory:Z,ro \
                          -v <casl_dir>:/tmp/casl-ansible:Z,ro \
                          -e INVENTORY_DIR=/tmp/inventory \
-                         -e PLAYBOOK_FILE=/tmp/casl-ansible/playbooks/openshift/end-to-end.yml
+                         -e PLAYBOOK_FILE=/tmp/casl-ansible/playbooks/openshift/end-to-end.yml \
+                         openshift/origin-ansible:<your version>
 ```                        
 
 ## Configuring the registry to use gcp object storage
