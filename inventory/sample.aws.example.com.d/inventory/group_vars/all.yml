@@ -45,7 +45,7 @@ dns_nameservers:
 - 8.8.8.8
 
 # Specify the version of docker to use
-docker_version: '1.12.6'
+docker_version: "1.12.*"
 
 # master(s) root (/) volume size and device
 # - default values are "/dev/sda1" and "50"

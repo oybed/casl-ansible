@@ -74,7 +74,7 @@ nsupdate_config:
         server: '<REPLACE WITH THE PUBLIC DNS SERVER IP>'
 
 # Specify the version of docker to use
-docker_version: '1.12.6'
+docker_version: "1.12.*"
 
 # Docker Storage configuration variables
 docker_volume_size: "5"
