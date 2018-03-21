@@ -102,16 +102,15 @@ openshift_hosted_registry_storage_kind: openstack
 # Subscription Management Details
 rhsm_register: True
 rhsm_repos:
-- "rhel-7-server-rpms"
-- "rhel-7-server-ose-3.5-rpms"
-- "rhel-7-server-extras-rpms"
-- "rhel-7-fast-datapath-rpms"
+  - "rhel-7-server-rpms"
+  - "rhel-7-server-ose-3.5-rpms"
+  - "rhel-7-server-extras-rpms"
+  - "rhel-7-fast-datapath-rpms"
 
 # Keep this to use Red Hat Satellite:
-rhsm_satellite: 'sat-6.example.com'
-rhsm_org: 'CASL_ORG'
+rhsm_server_hostname: 'sat-6.example.com'
+rhsm_org_id: 'CASL_ORG'
 rhsm_activationkey: 'casl-latest'
-rhsm_password: ''
 
 # Uncomment the following to use RHSM username, password and optionally pool:
 #rhsm_username: ''
