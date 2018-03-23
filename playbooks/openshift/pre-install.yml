@@ -15,6 +15,8 @@
 # - other prep (install additional packages, etc.)
 #
 - hosts: OSEv3
+  pre_tasks:
+    - import_tasks: prep-inventory.yml
   tasks:
     - import_role:
         name: ../../galaxy/infra-ansible/roles/rhsm
@@ -46,7 +48,7 @@
         tasks_from: update-host
       vars:
         ansible_become: True
-        pkg_update: True
+        pkg_update: "{{ update_cluster_hosts | default('True') }}"
     - import_role:
         name: ../../galaxy/infra-ansible/roles/update-host
         tasks_from: reboot-host
