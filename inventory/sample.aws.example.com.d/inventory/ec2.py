@@ -1,1 +1,1 @@
-../../../files/ec2.py
+../../scripts/ec2.py
