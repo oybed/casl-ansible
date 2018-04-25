@@ -158,7 +158,11 @@ def get_host_groups_from_cloud(inventory):
 
         if 'interface_ip' not in server:
             continue
-        firstpass[server['name']].append(server)
+        try:
+          if server["metadata"][os.environ['OS_INV_FILTER_KEY']] == os.environ['OS_INV_FILTER_VALUE']:
+            firstpass[server['name']].append(server)
+        except:
+          firstpass[server['name']].append(server)
     for name, servers in firstpass.items():
         if len(servers) == 1 and use_hostnames:
             append_hostvars(hostvars, groups, name, servers[0])
