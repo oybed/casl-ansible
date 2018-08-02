@@ -52,6 +52,8 @@ openshift_metrics_cassandra_storage_type: dynamic
 openshift_metrics_cassandra_pvc_size: 40G
 openshift_metrics_duration: 2
 
+# HTPASSWD Identity Provider
+# - update to other types of auth providers if necessary (i.e: LDAP, OAuth, ...)
 openshift_master_identity_providers:
 - 'name': 'htpasswd_auth'
   'login': 'true'
