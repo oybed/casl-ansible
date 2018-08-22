@@ -1,8 +1,8 @@
 ---
 
-#- hosts: seed-hosts
-#  roles:
-#  - ../../galaxy/openshift-ansible-contrib/roles/openshift-pv-cleanup
+- hosts: seed-hosts
+  roles:
+  - openshift-pv-cleanup
 
 - hosts: localhost
   gather_facts: no
