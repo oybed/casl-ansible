@@ -12,6 +12,7 @@
         openshift_openstack_stack_name: "{{ env_id }}.{{ dns_domain }}"
         openshift_openstack_public_dns_domain: "{{ dns_domain }}"
         openshift_openstack_full_dns_domain: "{{ openshift_openstack_stack_name }}"
+        openshift_openstack_dns_nameservers: "{{ dns_nameservers }}"
         openshift_openstack_subnet_cidr: "{{ openstack_subnet_prefix }}.0/24"
         openshift_openstack_pool_start: "{{ openstack_subnet_prefix }}.2"
         openshift_openstack_pool_end: "{{ openstack_subnet_prefix }}.254"
