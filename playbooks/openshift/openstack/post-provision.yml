@@ -14,7 +14,7 @@
       openshift_public_hostname: "{{ inventory_hostname }}"
   roles:
   - role: ../../../galaxy/infra-ansible/roles/config-hostname
-    dns_domain: "{{ env_id }}.{{ dns_domain }}"
+    dns_domain: "{{ full_dns_domain }}"
 
 # Build and process DNS Records
 - hosts: localhost
