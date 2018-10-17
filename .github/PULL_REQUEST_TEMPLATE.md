@@ -6,6 +6,7 @@ Include commands to run your new feature, and also post-run commands to validate
 
 #### Is there a relevant Issue open for this?
 Provide a link to any open issues that describe the problem you are solving.
+
 Use `resolves #<pr-number>` to auto-close at merge time
 
 #### Other Relevant info, PRs, etc.
