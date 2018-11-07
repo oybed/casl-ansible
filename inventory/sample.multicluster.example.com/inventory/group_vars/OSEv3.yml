@@ -1,0 +1,90 @@
+---
+
+# The username Ansible should use to access the instances with
+ansible_user: openshift
+
+# Should Ansible use "become" to gain elevated privileges (i.e.: root)
+ansible_become: True
+
+# OpenShift Specific Configuration Options
+# - Check the official OpenShift documentation for more details
+deployment_type: openshift-enterprise
+openshift_deployment_type: openshift-enterprise
+openshift_release: v3.11
+
+# Enable the Multi-Tenant plugin
+os_sdn_network_plugin_name: 'redhat/openshift-ovs-multitenant'
+
+# Registry URL & Credentials
+# For more info: https://access.redhat.com/terms-based-registry/
+oreg_url: 'registry.redhat.io/openshift3/ose-${component}:${version}'
+#oreg_auth_user: "{{ lookup('env', 'OREG_AUTH_USER' )}}"
+#oreg_auth_password: "{{ lookup('env', 'OREG_AUTH_PASSWORD' )}}"
+
+# Deploy Logging with dynamic storage
+openshift_hosted_logging_deploy: true
+openshift_logging_install_logging: true
+openshift_logging_es_pvc_dynamic: true
+openshift_logging_es_pvc_size: 40G
+openshift_logging_curator_default_days: 1
+
+# Deploy Metrics with dynamic storage
+openshift_metrics_install_metrics: true
+openshift_metrics_cassandra_storage_type: dynamic
+openshift_metrics_cassandra_pvc_size: 40G
+openshift_metrics_duration: 2
+
+# HTPASSWD Identity Provider
+# - update to other types of auth providers if necessary (i.e: LDAP, OAuth, ...)
+openshift_master_identity_providers:
+- 'name': 'htpasswd_auth'
+  'login': 'true'
+  'challenge': 'true'
+  'kind': 'HTPasswdPasswordIdentityProvider'
+
+# Uncommented to automatically create a set of test users with the above
+# HTPASSWD Identity Provider
+#create_users:
+#  num_users: 5
+#  prefix: 'rdu-user'
+#  passwd_file: '/etc/origin/master/htpasswd'
+#  password: 'rdu-sample'
+
+# OpenShift Node specific parameters
+openshift_node_groups:
+- name: node-config-master
+  labels:
+  - 'node-role.kubernetes.io/master=true'
+  edits:
+  - key: kubeletArguments.kube-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 50 }}M'
+  - key: kubeletArguments.system-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 100 }}M'
+- name: node-config-infra
+  labels:
+  - 'node-role.kubernetes.io/infra=true'
+  edits:
+  - key: kubeletArguments.kube-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 50 }}M'
+  - key: kubeletArguments.system-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 100 }}M'
+- name: node-config-compute
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  edits:
+  - key: kubeletArguments.kube-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 50 }}M'
+  - key: kubeletArguments.system-reserved
+    value:
+    - 'cpu={{ ansible_processor_vcpus * 50 }}m'
+    - 'memory={{ ansible_processor_vcpus * 100 }}M'

@@ -1,0 +1,5 @@
+---
+
+# OpenShift FQDNs, DNS, App domain specific configurations
+openshift_master_default_subdomain: "apps.c1.example.com"
+openshift_master_cluster_hostname: "master-0.c1.example.com"
