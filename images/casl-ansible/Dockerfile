@@ -20,7 +20,7 @@ RUN \
       python-openstackclient python-dns \
       python2-pyOpenSSL python-shade \
       python-boto3 \
-      pyton-openstacksdk; \
+      python-openstacksdk; \
     yum clean all; \
     rm -rf /var/cache/yum; \
     pip install --upgrade --force-reinstall requests
